@@ -1,4 +1,4 @@
-ARG VERSION=latest
+ARG VERSION=19.04
 FROM ubuntu:$VERSION
 
 MAINTAINER JAremko <w3techplaygound@gmail.com>
@@ -34,14 +34,6 @@ RUN echo 'APT::Get::Assume-Yes "true";' >> /etc/apt/apt.conf \
     && apt-get autoremove \
     && rm -rf /tmp/* /var/lib/apt/lists/* /root/.cache/*
 
-COPY asEnvUser /usr/local/sbin/
-
-# Only for sudoers
-RUN chown root /usr/local/sbin/asEnvUser \
-    && chmod 700  /usr/local/sbin/asEnvUser
-
-# ^^^^^^^ Those layers are shared ^^^^^^^
-
 # Emacs
 RUN apt-get update && apt-get install software-properties-common \
     && apt-add-repository ppa:kelleyk/emacs \
@@ -49,6 +41,14 @@ RUN apt-get update && apt-get install software-properties-common \
 # Cleanup
     && apt-get purge software-properties-common \
     && rm -rf /tmp/* /var/lib/apt/lists/* /root/.cache/*
+
+COPY asEnvUser /usr/local/sbin/asEnvUser
+
+# Only for sudoers
+RUN chown root /usr/local/sbin/asEnvUser \
+    && chmod 700  /usr/local/sbin/asEnvUser
+
+# ^^^^^^^ Those layers are shared ^^^^^^^
 
 ENV UNAME="emacser" \
     GNAME="emacs" \
@@ -61,4 +61,4 @@ ENV UNAME="emacser" \
 WORKDIR "${WORKSPACE}"
 
 ENTRYPOINT ["asEnvUser"]
-CMD ["bash", "-c", "emacs; /bin/bash"]
+CMD ["emacsclient -c"]
