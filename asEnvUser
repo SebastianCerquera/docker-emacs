@@ -41,7 +41,8 @@ then
 		chown "${UID}":"${GID}" -R ${UHOME}
 	fi
 else
-	mkdir -p "${UHOME}"
+        mkdir -p "${UHOME}"
+        echo "(server-start)" > "${UHOME}/.emacs"
 	chown "${UID}":"${GID}" "${UHOME}"
 fi
 
