@@ -42,8 +42,12 @@ then
 	fi
 else
         mkdir -p "${UHOME}"
-        echo "(server-start)" > "${UHOME}/.emacs"
-	chown "${UID}":"${GID}" "${UHOME}"
+        cp /opt/emacs "${UHOME}/.emacs"
+	su-exec "${UNAME}" emacs --daemon
+	su-exec "${UNAME}" emacsclient -e "(prepare-extensions)"
+	su-exec "${UNAME}" emacsclient -e "(kill-emacs)"
+	
+	chown -R "${UID}":"${GID}" "${UHOME}"
 fi
 
 mkdir -p "${WORKSPACE}"

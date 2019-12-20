@@ -43,6 +43,7 @@ RUN apt-get update && apt-get install software-properties-common \
     && rm -rf /tmp/* /var/lib/apt/lists/* /root/.cache/*
 
 COPY asEnvUser /usr/local/sbin/asEnvUser
+COPY emacs /opt/emacs
 
 # Only for sudoers
 RUN chown root /usr/local/sbin/asEnvUser \
