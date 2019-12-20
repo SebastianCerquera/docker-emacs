@@ -1,3 +1,18 @@
+(server-start)
+(require 'package)
+(setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
+                         ("melpa" . "http://melpa.milkbox.net/packages/")))
+(package-initialize)
+
+(defun prepare-extensions()
+  (package-install 'htmlize)
+  (package-install 'elnode)
+  (package-install 'evil))
+
+(unless package-archive-contents
+  (package-refresh-contents))
+
+
 (ido-mode t)
 
 (global-set-key (kbd "C-x C-m") 'execute-extended-command)
@@ -24,23 +39,10 @@
 
 (setq org-use-tag-inheritance nil)
 
-(server-start)
-
 (put 'downcase-region 'disabled nil)
-
-(require 'package)
-; add MELPA to repository list
-(setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
-                         ("melpa" . "http://melpa.milkbox.net/packages/")))
-
-(package-initialize)
 
 (require 'elnode)
 (require 'htmlize)
-
-;;(add-to-list 'load-path "~/.emacs.d/lain/")
-;;(require 'lain)
-
 (require 'evil)
 (evil-mode 1)
 

@@ -42,11 +42,15 @@ then
 	fi
 else
         mkdir -p "${UHOME}"
-        cp /opt/emacs "${UHOME}/.emacs"
+        cp /opt/emacs-instalation "${UHOME}/.emacs"
+        chown -R "${UID}":"${GID}" "${UHOME}"
+	
 	su-exec "${UNAME}" emacs --daemon
 	su-exec "${UNAME}" emacsclient -e "(prepare-extensions)"
 	su-exec "${UNAME}" emacsclient -e "(kill-emacs)"
-	
+
+
+	cp /opt/emacs "${UHOME}/.emacs"
 	chown -R "${UID}":"${GID}" "${UHOME}"
 fi
 
