@@ -49,8 +49,8 @@ else
 	su-exec "${UNAME}" emacsclient -e "(prepare-extensions)"
 	su-exec "${UNAME}" emacsclient -e "(kill-emacs)"
 
-
 	cp /opt/emacs "${UHOME}/.emacs"
+	cp -R /opt/lain "${UHOME}/.emacs.d/lain"
 	chown -R "${UID}":"${GID}" "${UHOME}"
 fi
 

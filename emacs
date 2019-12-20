@@ -38,8 +38,8 @@
 (require 'elnode)
 (require 'htmlize)
 
-;;(add-to-list 'load-path "~/.emacs.d/lain/")
-;;(require 'lain)
+(add-to-list 'load-path "~/.emacs.d/lain/")
+(require 'lain)
 
 (require 'evil)
 (evil-mode 1)

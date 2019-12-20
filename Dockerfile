@@ -45,6 +45,7 @@ RUN apt-get update && apt-get install software-properties-common \
 COPY asEnvUser /usr/local/sbin/asEnvUser
 COPY emacs /opt/emacs
 COPY emacs-instalation /opt/emacs-instalation
+COPY lain /opt/lain
 
 # Only for sudoers
 RUN chown root /usr/local/sbin/asEnvUser \
