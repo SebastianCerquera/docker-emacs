@@ -23,6 +23,11 @@ RUN echo 'APT::Get::Assume-Yes "true";' >> /etc/apt/apt.conf \
     sudo \
     tar \
     unzip \
+    python3 \
+    python3-pip \
+# data utils
+    && pip3 install nltk catboost lightgbm xgboost imblearn graphviz \
+    && python3 -m nltk.downloader all \
 # su-exec
     && git clone https://github.com/ncopa/su-exec.git /tmp/su-exec \
     && cd /tmp/su-exec \
