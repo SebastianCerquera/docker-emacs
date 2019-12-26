@@ -128,8 +128,7 @@
      ("^.+//base.html" . cookie-handler)
      ("^.*//\\(.*\\)" . elnode-webserver)))
 
-
-(setq htmlize-head-tags "<meta http-equiv=\"Content-Security-Policy\" content=\"default-src * 'unsafe-inline' 'unsafe-eval'; script-src * 'unsafe-inline' 'unsafe-eval'; connect-src * 'unsafe-inline'; img-src * data: blob: 'unsafe-inline'; frame-src *; style-src * 'unsafe-inline';\">
+(setq org-html-head-extra "<meta http-equiv=\"Content-Security-Policy\" content=\"default-src * 'unsafe-inline' 'unsafe-eval'; script-src * 'unsafe-inline' 'unsafe-eval'; connect-src * 'unsafe-inline'; img-src * data: blob: 'unsafe-inline'; frame-src *; style-src * 'unsafe-inline';\">
 <script src=\"http://code.jquery.com/jquery-latest.min.js\" type=\"text/javascript\"></script>
 <script type=\"text/javascript\">
     $(document).ready(function(){
@@ -283,13 +282,11 @@
         });
 
         var replaceLinks = function(){
-              a = $(\"pre\").text().match(/\\[\\[\\/small\\/SMALL\\/images\\/.+\\..+\\]\\[.+\\..+\\]\\]/g);
-              b = a.map(function(x){m = x.match(/\\[\\[\\/small\\/SMALL\\/images\\/.+\\..+\\]\\[(.+\\..+)\\]\\]/); return m;});
-              txt = $(\"body\").html();
-              b.forEach(function(l){
-                 txt = txt.replace(l[0], '<a href=\"/images/' +  l[1] + '\">' + l[1] + '</a>');
-              })
-              $(\"body\").html(txt);
+            var a = $(\"a\").filter(function(i, e){return e.href.match(/small\\/SMALL\\/images/g)})
+            var b = a.map(function(e, x){m = x.href.match(/small\\/SMALL\\/images\\/(.+)/); return \"/images/\" + m[1]});
+            for(i = 0; i < a.length; i++){
+                a[i].href = b[i] 			
+            }
         }
          
         replaceLinks();
@@ -323,6 +320,7 @@
 </body>
 </html>")
 
+(setq htmlize-head-tags org-html-head-extra)
 
 (defun cookie-handler (httpcon)
   (elnode-http-start httpcon 200 '("Content-type" . "text/html"))
