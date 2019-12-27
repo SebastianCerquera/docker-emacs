@@ -1,3 +1,16 @@
+;;; lain.el --- Cool personal assistant
+
+;; Author: Sebastian Gonzalez <sebastian2zen@gmail.com>
+;; Keywords: logbook org
+;; Version: 0.1
+;; Package: lain
+
+;; Maintainer: sebastian2zen@gmail.com
+
+;;; Code:
+
+(require 'elnode)
+
 (defun org-log-note-update (state date hour newstate)
   (re-search-forward (org-item-beginning-re) nil t)
   (let ((regex (concat "\\(.+\\)" state "\\(.+\\)\\[[0-9]+-[0-9]+-[0-9]+ \\(.+\\) [0-9]+:[0-9]+\\]")))
@@ -456,3 +469,4 @@
 (elnode-start 'root-handler :port 8080 :host "0.0.0.0")
 
 (provide 'lain)
+;;; lain.el ends here
