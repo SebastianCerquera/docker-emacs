@@ -59,6 +59,14 @@ RUN apt-get update && apt-get install software-properties-common \
     && apt-get purge software-properties-common \
     && rm -rf /tmp/* /var/lib/apt/lists/* /root/.cache/*
 
+
+RUN echo 'APT::Get::Assume-Yes "true";' >> /etc/apt/apt.conf \
+    && apt-get update && apt-get install \
+    net-tools openssh-server \
+# Cleanup
+    && apt-get autoremove \
+    && rm -rf /tmp/* /var/lib/apt/lists/* /root/.cache/*
+
 COPY asEnvUser /usr/local/sbin/asEnvUser
 COPY emacs /opt/emacs
 COPY emacs-instalation /opt/emacs-instalation
