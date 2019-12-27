@@ -1,12 +1,24 @@
-ARG VERSION=19.04
+ARG VERSION=19.10
 FROM ubuntu:$VERSION
 
 MAINTAINER JAremko <w3techplaygound@gmail.com>
 
 # Fix "Couldn't register with accessibility bus" error message
 ENV NO_AT_BRIDGE=1
+ENV LANG es_CO.UTF-8
+ENV LANGUAGE es_CO:es
+ENV LC_ALL es_CO.UTF-8
 
 ENV DEBIAN_FRONTEND noninteractive
+
+RUN echo 'APT::Get::Assume-Yes "true";' >> /etc/apt/apt.conf \
+    && apt-get update && apt-get install \
+    language-pack-es \
+    && echo "LANG=es_CO.UTF-8" > /etc/default/locale \
+# Cleanup
+    && apt-get purge build-essential \
+    && apt-get autoremove \
+    && rm -rf /tmp/* /var/lib/apt/lists/* /root/.cache/*
 
 # basic stuff
 RUN echo 'APT::Get::Assume-Yes "true";' >> /etc/apt/apt.conf \

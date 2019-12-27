@@ -49,6 +49,14 @@
   (set-background-color "black")
   (set-foreground-color "orange"))
 
+
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((python . t)
+   (emacs-lisp . t)))
+
+(setq org-babel-python-command "python3")
+
 (setq org-src-fontify-natively t)
 (setq org-html-htmlize-output-type 'css)
 
