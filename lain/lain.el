@@ -11,6 +11,12 @@
 
 (require 'elnode)
 
+
+;;; This functions should be defined on the emacs file, i didn't added to lain because they have a more general use
+
+(defalias 'lain-look-and-feel 'high-bright-look-and-feel)
+
+
 (defun org-log-note-update (state date hour newstate)
   (re-search-forward (org-item-beginning-re) nil t)
   (let ((regex (concat "\\(.+\\)" state "\\(.+\\)\\[[0-9]+-[0-9]+-[0-9]+ \\(.+\\) [0-9]+:[0-9]+\\]")))
@@ -339,75 +345,43 @@
   (elnode-http-start httpcon 200 '("Content-type" . "text/html"))
   (elnode-http-return httpcon lain-cookie-html))
 
-
-(defun org-periodic-view ()
-  (setq lain-org-files '("/small/SMALL/PERIODIC.org"))
+(defun org-base-view (lain-org-files view-type)
+  (lain-look-and-feel)
   (lain-kill-org-buffers)
   (dolist (file lain-org-files)
       (find-file file))
   (let ((org-agenda-files lain-org-files)
         (org-agenda-buffer-tmp-name "TASKS.html"))
-    (org-agenda-list)))
+    (funcall view-type)))
 
 ;; i might needed when working on the android client
 (defun periodic-view (httpcon)
-  (high-bright-look-and-feel)
-  (org-periodic-view)
+  (org-base-view '("/small/SMALL/PERIODIC.org") 'org-agenda-list)
   (save-excursion
     (set-buffer (get-buffer-create "TASKS.html"))
     (org-agenda-write "/tmp/org/PERIODIC.html"))
   (elnode-http-start httpcon 200 '("Content-type" . "text/html"))
   (elnode-http-return httpcon (concat "<html><a href=" "/PERIODIC.html" ">Periodic View</a></html>")))
 
-
-(defun org-calendar-view ()
-  (setq lain-org-files '("/small/SMALL/WORK/PROJECT.org" "/small/SMALL/THINGS/PROJECT.org" "/small/SMALL/SKILLS/PROJECT.org" "/small/SMALL/THINGS/MAINTAINANCE/chores/PROJECT.org"))
-  (lain-kill-org-buffers)
-  (dolist (file lain-org-files)
-      (find-file file))
-  (let ((org-agenda-files lain-org-files)
-        (org-agenda-buffer-tmp-name "TASKS.html"))
-    (org-agenda-list)))
-
 (defun calendar-view (httpcon)
-  (high-bright-look-and-feel)
-  (org-calendar-view)
+  (org-base-view '("/small/SMALL/WORK/PROJECT.org" "/small/SMALL/THINGS/PROJECT.org" "/small/SMALL/SKILLS/PROJECT.org" "/small/SMALL/THINGS/MAINTAINANCE/chores/PROJECT.org")
+		 'org-agenda-list)
   (save-excursion
     (set-buffer (get-buffer-create "TASKS.html"))
     (org-agenda-write "/tmp/org/VIEW.html"))
   (elnode-http-start httpcon 200 '("Content-type" . "text/html"))
   (elnode-http-return httpcon (concat "<html><a href=" "/VIEW.html" ">Agenda View</a></html>")))
 
-(defun org-todo-view ()
-  (setq lain-org-files '("/small/SMALL/WORK/PROJECT.org" "/small/SMALL/THINGS/PROJECT.org" "/small/SMALL/SKILLS/PROJECT.org"))
-  (lain-kill-org-buffers)
-  (dolist (file lain-org-files)
-    (find-file file))
-  (let ((org-agenda-files lain-org-files)
-        (org-agenda-buffer-name "TASKS.html"))
-    (org-todo-list)))
-
 (defun todo-view (httpcon)
-  (high-bright-look-and-feel)
-  (org-todo-view)
+  (org-base-view '("/small/SMALL/WORK/PROJECT.org" "/small/SMALL/THINGS/PROJECT.org" "/small/SMALL/SKILLS/PROJECT.org") 'org-todo-list)
   (save-excursion
-    (set-buffer (get-buffer-create "TASKS.html"))
+    (set-buffer (get-buffer-create "TASKS.html" ))
     (org-agenda-write "/tmp/org/TODO.html" nil nil"TASKS.html"))
   (elnode-http-start httpcon 200 '("Content-type" . "text/html"))
   (elnode-http-return httpcon (concat "<html><a href=" "/TODO.html" ">Todo View</a></html>")))
 
-(defun org-chores-view ()
-  (setq lain-org-files '("/small/SMALL/THINGS/MAINTAINANCE/chores/PROJECT.org"))
-  (lain-kill-org-buffers)
-  (dolist (file lain-org-files)
-    (find-file file))
-  (let ((org-agenda-files lain-org-files)
-        (org-agenda-buffer-name "TASKS.html"))
-    (org-todo-list)))
-
 (defun chores-view (httpcon)
-  (high-bright-look-and-feel)
-  (org-chores-view)
+  (org-base-view '("/small/SMALL/THINGS/MAINTAINANCE/chores/PROJECT.org") 'org-todo-list)
   (save-excursion
     (set-buffer (get-buffer-create "TASKS.html"))
     (org-agenda-write "/tmp/org/CHORES.html" nil nil"TASKS.html"))
@@ -415,38 +389,38 @@
   (elnode-http-return httpcon (concat "<html><a href=" "/CHORES.html" ">Chores View</a></html>")))
 
 (defun signal-view (httpcon)
-  (high-bright-look-and-feel)
+  (lain-look-and-feel)
   (find-file "/small/SMALL/SIGNAL.org")
   (org-agenda-write-tmp "/tmp/org/SIGNAL.html")
   (elnode-http-start httpcon 200 '("Content-type" . "text/html"))
   (elnode-http-return httpcon (concat "<html><a href=" "/SIGNAL.html" ">Signal View</a></html>")))
 
 (defun task-reschedule-handler (httpcon)
-  (high-bright-look-and-feel)
+  (lain-look-and-feel)
   (elnode-http-start httpcon 200 '("Content-type" . "text/html"))
   (lain-reschedule-task (elnode-http-param httpcon "text") (elnode-http-param httpcon "date"))
   (elnode-http-return httpcon (concat "<html><b>" "</b></html>")))
 
 (defun periodic-itried-handler (httpcon)
-  (high-bright-look-and-feel)
+  (lain-look-and-feel)
   (elnode-http-start httpcon 200 '("Content-type" . "text/html"))
   (lain-itried-task (elnode-http-param httpcon "text") (elnode-http-param httpcon "date") (elnode-http-param httpcon "time") (elnode-http-param httpcon "link"))
   (elnode-http-return httpcon (concat "<html><b>" "</b></html>")))
 
 (defun periodic-done-handler (httpcon)
-  (high-bright-look-and-feel)
+  (lain-look-and-feel)
   (elnode-http-start httpcon 200 '("Content-type" . "text/html"))
   (lain-done-task (elnode-http-param httpcon "text") (elnode-http-param httpcon "date") (elnode-http-param httpcon "time") (elnode-http-param httpcon "link"))
   (elnode-http-return httpcon (concat "<html><b>" "</b></html>")))
 
 (defun periodic-canceled-handler (httpcon)
-  (high-bright-look-and-feel)
+  (lain-look-and-feel)
   (elnode-http-start httpcon 200 '("Content-type" . "text/html"))
   (lain-canceled-task (elnode-http-param httpcon "text") (elnode-http-param httpcon "date") (elnode-http-param httpcon "time") (elnode-http-param httpcon "link"))
   (elnode-http-return httpcon (concat "<html><b>" "</b></html>")))
 
 (defun task-handler (httpcon)
-  (high-bright-look-and-feel)
+  (lain-look-and-feel)
   (elnode-http-start httpcon 200 '("Content-type" . "text/html"))
   (lain-create-agenda-view (elnode-http-param httpcon "text"))
   (elnode-http-return httpcon (concat "<html><b>" "</b></html>")))

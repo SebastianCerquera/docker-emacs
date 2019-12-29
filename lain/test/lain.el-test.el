@@ -10,9 +10,13 @@
 (require 'ert)
 (require 'lain)
 
-(ert-deftest test-dummy ()
-  (lain-goto-to-task "hola")
-  (should (= 1 1)))
+(defun test-look-and-feel ())
+
+(defalias 'lain-look-and-feel 'test-look-and-feel)
+
+(ert-deftest check-todo-agenda ()
+  (org-base-view '("/home/sebastian/sources/lain/docker-emacs/lain/test/AGENDA/PROJECT.org") 'org-todo-list)
+  (re-search-forward "PROJECTS, 1"))
 
 
 (provide 'lain-tests)
