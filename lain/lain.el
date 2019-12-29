@@ -16,6 +16,7 @@
 
 (defalias 'lain-look-and-feel 'high-bright-look-and-feel)
 
+(defvar lain-agenda-buffer-name "TASKS.html")
 
 (defun org-log-note-update (state date hour newstate)
   (re-search-forward (org-item-beginning-re) nil t)
@@ -351,15 +352,18 @@
   (dolist (file lain-org-files)
       (find-file file))
   (let ((org-agenda-files lain-org-files)
-        (org-agenda-buffer-tmp-name "TASKS.html"))
+        (org-agenda-buffer-tmp-name lain-agenda-buffer-name))
     (funcall view-type)))
+
+(defun base-view(name agendas-list agenda-type)
+  (org-base-view agendas-list agenda-type)
+  (save-excursion
+    (set-buffer (get-buffer-create lain-agenda-buffer-name))
+    (org-agenda-write (concat "/tmp/org/" name ".html"))))
 
 ;; i might needed when working on the android client
 (defun periodic-view (httpcon)
-  (org-base-view '("/small/SMALL/PERIODIC.org") 'org-agenda-list)
-  (save-excursion
-    (set-buffer (get-buffer-create "TASKS.html"))
-    (org-agenda-write "/tmp/org/PERIODIC.html"))
+  (base-view "PERIODIC" '("/small/SMALL/PERIODIC.org") 'org-agenda-list) 
   (elnode-http-start httpcon 200 '("Content-type" . "text/html"))
   (elnode-http-return httpcon (concat "<html><a href=" "/PERIODIC.html" ">Periodic View</a></html>")))
 
