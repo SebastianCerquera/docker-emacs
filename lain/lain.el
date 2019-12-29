@@ -91,12 +91,18 @@
 (defun lain-canceled-task (text date time link)
   (lain-update-task text date time link "CANCELED"))
 
+(defun lain-kill-named-buffers(org-buffer)
+    (if (string-match ".*PROJECT.org" org-buffer 0)
+        (kill-buffer x))
+    (if (string-match ".*PERIODIC.org" org-buffer 0)
+        (kill-buffer x)))
+
 (defun lain-kill-org-buffers()
   (dolist (x (buffer-list))
-    (if (string-match ".*PROJECT.org" (buffer-name x) 0)
-        (kill-buffer x))
-    (if (string-match ".*PERIODIC.org" (buffer-name x) 0)
-        (kill-buffer x))))
+    (setq org-buffer (buffer-name x))
+    ;; there are buffers without name and the string match cannot handle this case
+    (if org-buffer
+	(lain-kill-named-buffers org-buffer))))
 
 (defun org-agenda-write-tmp (file &optional open nosettings agenda-bufname)
   (org-let (if nosettings nil org-agenda-exporter-settings)
