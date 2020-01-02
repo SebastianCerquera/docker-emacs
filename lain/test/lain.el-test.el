@@ -18,8 +18,10 @@
 
 (defvar lain-agenda-buffer-name "TASKS.html")
 
+(defvar my-test-location (file-name-directory (or default-directory buffer-file-name)))
+
 (ert-deftest check-org-base-view ()
-  (org-base-view '("/home/sebastian/sources/lain/docker-emacs/lain/test/AGENDA/PROJECT.org") 'org-todo-list)
+  (org-base-view (list (concat my-test-location "test/AGENDA/PROJECT.org")) 'org-todo-list)
   (let ((buffer (get-buffer (buffer-name))))
 	(switch-to-buffer buffer)
 	(set-buffer buffer)
@@ -28,7 +30,7 @@
 (ert-deftest check-base-view ()
   (let ((name "TEST1"))
     (delete-file (concat "/tmp/org/" name ".html"))
-    (base-view name '("/home/sebastian/sources/lain/docker-emacs/lain/test/AGENDA/PROJECT.org") 'org-todo-list)
+    (base-view name (list (concat my-test-location "test/AGENDA/PROJECT.org")) 'org-todo-list)
     (should (file-exists-p (concat "/tmp/org/" name ".html")))))
 
 (provide 'lain-tests)
