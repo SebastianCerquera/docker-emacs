@@ -18,6 +18,7 @@ node("runner") {
    ]);
   dir("lain") {
      sh("mkdir -p /tmp/org/")
+     sh("rm -rf /tmp/org/*")
      sh("~/.cask/bin/cask")
      sh("./run-tests.sh")
   }

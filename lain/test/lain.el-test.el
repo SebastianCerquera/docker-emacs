@@ -29,7 +29,6 @@
 
 (ert-deftest check-base-view ()
   (let ((name "TEST1"))
-    (delete-file (concat "/tmp/org/" name ".html"))
     (base-view name (list (concat my-test-location "test/AGENDA/PROJECT.org")) 'org-todo-list)
     (should (file-exists-p (concat "/tmp/org/" name ".html")))))
 
