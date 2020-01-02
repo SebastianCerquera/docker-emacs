@@ -1,2 +1,2 @@
 #!/bin/sh -e
-cask exec ert-runner -L . -L test "$@"
+~/.cask/bin/cask exec ert-runner -L . -L test "$@"
