@@ -3,7 +3,7 @@
 // curl -fsSL https://raw.githubusercontent.com/cask/cask/master/go | python
 
 node("runner") {
-  sh("ssh-keyscan -t rsa git-container >> /home/git/.ssh/known_hosts")
+  sh("ssh-keyscan -t rsa git-container >> ~/.ssh/known_hosts")
   checkout([ 
        $class: 'GitSCM',
        branches: [[
