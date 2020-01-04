@@ -63,4 +63,14 @@ mkdir -p "${WORKSPACE}"
 chown "${UID}":"${GID}" "${WORKSPACE}"
 cd "${WORKSPACE}"
 
-su-exec "${UNAME}" "$@"
+if [ "x$1" == "xbash" ]; then
+    exec "$@"
+fi
+
+su-exec "${UNAME}" emacs --daemon
+
+EMACS_PID=$(ps -e -o pid,cmd | awk '/--daemon/{print $1}')
+while [ ! -z $EMACS_PID ]; do
+sleep 5
+EMACS_PID=$(ps -e -o pid,cmd | awk '/--daemon/{print $1}')
+done
