@@ -69,8 +69,8 @@ fi
 
 su-exec "${UNAME}" emacs --daemon
 
-EMACS_PID=$(ps -e -o pid,cmd | awk '/--daemon/{print $1}')
+EMACS_PID=$(ps -e -o pid,cmd | awk '/emacs --daemon/ && !/grep/{print $1}')
 while [ ! -z $EMACS_PID ]; do
 sleep 5
-EMACS_PID=$(ps -e -o pid,cmd | awk '/--daemon/{print $1}')
+EMACS_PID=$(ps -e -o pid,cmd | awk '/emacs --daemon/ && !/grep/{print $1}')
 done
