@@ -67,6 +67,8 @@ RUN echo 'APT::Get::Assume-Yes "true";' >> /etc/apt/apt.conf \
     && apt-get autoremove \
     && rm -rf /tmp/* /var/lib/apt/lists/* /root/.cache/*
 
+RUN ln -sf /usr/share/zoneinfo/America/Bogota /etc/localtime 
+
 COPY asEnvUser /usr/local/sbin/asEnvUser
 COPY emacs /opt/emacs
 COPY emacs-instalation /opt/emacs-instalation

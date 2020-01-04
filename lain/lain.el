@@ -328,7 +328,7 @@
 <script type=\"text/javascript\">
     $(document).ready(function(){
          $(\"input:text\").change(function(a){
-             document.cookie = \"Authorization=\" + $(a.target).val() +  \"; expires=Fri, 3 Aug 2019 20:47:11 UTC; path=/;\"
+             document.cookie = \"Authorization=\" + $(a.target).val() +  \"; expires=Mon, 3 Aug 2020 20:47:11 UTC; path=/;\"
          });
  
          $(\"input:submit\").click(function(a){
