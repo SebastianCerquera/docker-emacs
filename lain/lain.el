@@ -60,18 +60,13 @@
   (delete-file "/tmp/org/ORG-TASK.html"))
 
 (defun lain-reschedule-task (text date)
-  (switch-to-buffer (get-buffer-create lain-agenda-buffer-name))
   (lain-goto-to-task text)
   (org-schedule '(4))
   (org-schedule '() date)
   (lain-create-agenda-view text))
 
 (defun lain-update-task(text date time link state)
-  (switch-to-buffer (get-buffer-create lain-agenda-buffer-name))
-  (message (buffer-name (current-buffer)))
-  (beginning-of-buffer)
-  (re-search-forward text)
-  (org-agenda-switch-to)
+  (lain-goto-to-task text)
   (org-todo 'right)
   ;; this is suppsed to be executed as a hook but it is not running when the command is invoked non interactively.
   (org-add-log-note)
@@ -454,7 +449,7 @@
 (defun root-handler (httpcon)
   (elnode-hostpath-dispatcher httpcon my-app-routes))
  
-(elnode-start 'root-handler :port 8080 :host "0.0.0.0")
+(elnode-start 'root-handler :port 8180 :host "0.0.0.0")
 
 (provide 'lain)
 ;;; lain.el ends here
