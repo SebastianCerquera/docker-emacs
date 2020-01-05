@@ -376,7 +376,8 @@
   (elnode-http-return httpcon (concat "<html><a href=" "/PERIODIC.html" ">Periodic View</a></html>")))
 
 (defun calendar-view (httpcon)
-  (org-base-view '("/small/SMALL/WORK/PROJECT.org" "/small/SMALL/THINGS/PROJECT.org" "/small/SMALL/SKILLS/PROJECT.org" "/small/SMALL/THINGS/MAINTAINANCE/chores/PROJECT.org")
+  (org-base-view '("/small/SMALL/WORK/PROJECT.org" "/small/SMALL/THINGS/PROJECT.org" "/small/SMALL/SKILLS/PROJECT.org"
+		   "/small/SMALL/WORK/notes.org" "/small/SMALL/THINGS/MAINTAINANCE/chores/PROJECT.org")
 		 'org-agenda-list)
   (save-excursion
     (set-buffer (get-buffer-create "TASKS.html"))
@@ -385,7 +386,7 @@
   (elnode-http-return httpcon (concat "<html><a href=" "/VIEW.html" ">Agenda View</a></html>")))
 
 (defun todo-view (httpcon)
-  (org-base-view '("/small/SMALL/WORK/PROJECT.org" "/small/SMALL/THINGS/PROJECT.org" "/small/SMALL/SKILLS/PROJECT.org") 'org-todo-list)
+  (org-base-view '("/small/SMALL/WORK/PROJECT.org" "/small/SMALL/THINGS/PROJECT.org" "/small/SMALL/SKILLS/PROJECT.org" "/small/SMALL/WORK/notes.org") 'org-todo-list)
   (save-excursion
     (set-buffer (get-buffer-create "TASKS.html" ))
     (org-agenda-write "/tmp/org/TODO.html" nil nil"TASKS.html"))
