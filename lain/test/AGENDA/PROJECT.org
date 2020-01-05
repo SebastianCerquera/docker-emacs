@@ -4,6 +4,8 @@
 ** TODO PROJECTS, 1
    - <2019-09-21> 1
    - <2019-08-20> 2
+** TODO PROJECTS, 2
+   SCHEDULED: <2020-01-05 dom>
 ** TODO PROJECTS, 1 weekly
    SCHEDULED: <2020-01-05 dom +1w>
    - <2019-09-21> ahskjhasdjnland

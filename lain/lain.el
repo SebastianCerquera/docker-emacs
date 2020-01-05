@@ -24,6 +24,11 @@
     (if (string-match "<.*\\(\\+.+\\)>" scheduled 0)
         (match-string 1 scheduled))))
 
+(defun lain-extract-date-scheduling ()
+  (let ((scheduled (org-entry-get (point) "SCHEDULED")))
+    (if (string-match "<\\(.+-.+-.+\\)[[:blank:]]+.*>" scheduled 0)
+        (match-string 1 scheduled))))
+
 (defun org-log-note-update (state date hour newstate)
   (re-search-forward (org-item-beginning-re) nil t)
   (let ((regex (concat "\\(.+\\)" state "\\(.+\\)\\[[0-9]+-[0-9]+-[0-9]+ \\(.+\\) [0-9]+:[0-9]+\\]")))
