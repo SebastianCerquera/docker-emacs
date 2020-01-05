@@ -1,4 +1,5 @@
 #+TODO: PERIODIC | DONE CANCELED
+#+TODO: TODO | DONE CANCELED
 
 #+STARTUP: logdone
 #+OPTIONS: broken-links:t
