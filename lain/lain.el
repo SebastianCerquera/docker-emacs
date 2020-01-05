@@ -26,7 +26,7 @@
 
 (defun lain-extract-date-scheduling ()
   (let ((scheduled (org-entry-get (point) "SCHEDULED")))
-    (if (string-match "<\\(.+-.+-.+\\)[[:blank:]]+.*>" scheduled 0)
+    (if (string-match "<\\(....-..-..\\)[[:blank:]]+.*>" scheduled 0)
         (match-string 1 scheduled))))
 
 (defun org-log-note-update (state date hour newstate)
@@ -67,7 +67,7 @@
   (lain-create-agenda-view text))
 
 (defun lain-update-task(text date time link state)
-  (switch-to-buffer (get-buffer-create "TASKS.html"))
+  (switch-to-buffer (get-buffer-create lain-agenda-buffer-name))
   (message (buffer-name (current-buffer)))
   (beginning-of-buffer)
   (re-search-forward text)
@@ -77,7 +77,10 @@
   (org-add-log-note)
   (org-narrow-to-subtree)
   (switch-to-buffer (current-buffer))
-  (org-log-note-update "DONE" date time (if (string-empty-p link) state (concat "[[" link "]" "[" state "]]")))
+  (org-log-note-update "DONE" date time
+                       (if link
+                           (if (string-empty-p link)
+                               state (concat "[[" link "]" "[" state "]]"))))
   (message (buffer-name (current-buffer)))
   (save-buffer)
   (org-agenda-write-tmp "/tmp/org/ORG-TASK.html"))

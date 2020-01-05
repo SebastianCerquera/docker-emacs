@@ -1,3 +1,8 @@
+#+TODO: PERIODIC | DONE CANCELED
+
+#+STARTUP: logdone
+#+OPTIONS: broken-links:t
+
 * TODO PROJECTS
   - <2019-10-21> 1
   - <2019-10-20> 2
