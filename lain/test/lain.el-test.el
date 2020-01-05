@@ -37,15 +37,18 @@
   (extrac-periodic-scheduling-test "PROJECTS, 1 weekly" "+1w")
   (extrac-periodic-scheduling-test "PROJECTS, 1 monthly" "+1m"))
 
-(defun test-rescheduling-task(text date &optional periodic)
+(defun test-rescheduling-task(text date)
   (org-base-view (list (concat my-test-location "test/AGENDA/PROJECT.org")) 'org-todo-list)
   (lain-reschedule-task text date)
   (lain-goto-to-task text)
   (let ((result (lain-extract-date-scheduling)))
 	(should (string-equal date result))))
 
+
 (ert-deftest rescheduling-task ()
-  (test-rescheduling-task "PROJECTS, 2" "2020-12-05"))
+  (test-rescheduling-task "PROJECTS, 2" "2020-12-05")
+  (test-rescheduling-task "PROJECTS, 1 monthly" "2020-12-05")
+  (extrac-periodic-scheduling-test "PROJECTS, 1 monthly" "+1m"))
 
 (provide 'lain-tests)
 ;;; lain-tests.el ends here
