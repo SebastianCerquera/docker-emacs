@@ -14,9 +14,8 @@
 
 (defalias 'lain-look-and-feel 'test-look-and-feel)
 
-(defvar lain-agenda-buffer-name "*Org Agenda*")
-
-(defvar lain-agenda-buffer-name "TASKS.html")
+;; Enviromental variables
+(setq lain-agenda-buffer-name "*Org Agenda*")
 
 (defvar my-test-location (file-name-directory (or default-directory buffer-file-name)))
 
@@ -31,7 +30,6 @@
 
 (defun extrac-periodic-scheduling-test (text result)
   (org-base-view (list (concat my-test-location "test/AGENDA/PROJECT.org")) 'org-todo-list)
-  (switch-to-buffer (current-buffer))
   (lain-goto-to-task text)
   (should (string-equal (lain-extract-periodic-scheduling) result)))
 

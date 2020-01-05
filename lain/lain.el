@@ -17,6 +17,7 @@
 (defalias 'lain-look-and-feel 'high-bright-look-and-feel)
 
 (defvar lain-agenda-buffer-name "TASKS.html")
+;;(defvar lain-agenda-buffer-name "*Org Agenda*")
 
 (defun lain-extract-periodic-scheduling ()
   (let ((scheduled (org-entry-get (point) "SCHEDULED")))
@@ -33,7 +34,7 @@
 
 (defun lain-goto-to-task (text)
 ;; i don't understand why this doesn't work with ert
-;; (switch-to-buffer (get-buffer-create lain-agenda-buffer-name))
+ (switch-to-buffer (get-buffer-create lain-agenda-buffer-name))
  (beginning-of-buffer)
  (re-search-forward text)
  (org-agenda-switch-to)
