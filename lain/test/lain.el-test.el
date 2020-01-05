@@ -54,5 +54,8 @@
   (let ((result (lain-extract-date-scheduling)))
     (should (string-equal "2020-01-12" result))))
 
+(ert-deftest lain-task-done ()
+  (lain-done-task "PROJECTS, TO COMPLETE" "2020-12-05" "00:00" nil))
+
 (provide 'lain-tests)
 ;;; lain-tests.el ends here

@@ -17,3 +17,5 @@
 ** TODO PROJECTS, 1 monthly
    SCHEDULED: <2020-01-05 dom +1m>
    - <2019-09-21> ahskjhasdjnland
+** TODO PROJECTS, TO COMPLETE
+   SCHEDULED: <2020-01-05 dom>
