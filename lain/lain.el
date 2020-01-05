@@ -48,9 +48,7 @@
 (defun lain-create-agenda-view (text)
   (lain-goto-to-task text)
   (switch-to-buffer (current-buffer))
-  (org-html-export-as-html)
-  (switch-to-buffer (get-buffer-create "*Org HTML Export*"))
-  (write-region (point-min) (point-max) "/tmp/org/ORG-TASK.html"))
+  (org-agenda-write-tmp "/tmp/org/ORG-TASK.html"))
 
 (defun lain-destroy-agenda-view (text)
   (switch-to-buffer (get-buffer-create "TASKS.html"))
