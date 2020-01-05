@@ -22,15 +22,22 @@
 
 (ert-deftest check-org-base-view ()
   (org-base-view (list (concat my-test-location "test/AGENDA/PROJECT.org")) 'org-todo-list)
-  (let ((buffer (get-buffer (buffer-name))))
-	(switch-to-buffer buffer)
-	(set-buffer buffer)
-	(re-search-forward "PROJECTS, 1")))
+  (re-search-forward "PROJECTS, 1"))
 
 (ert-deftest check-base-view ()
   (let ((name "TEST1"))
     (base-view name (list (concat my-test-location "test/AGENDA/PROJECT.org")) 'org-todo-list)
     (should (file-exists-p (concat "/tmp/org/" name ".html")))))
+
+(defun extrac-periodic-scheduling-test (text result)
+  (org-base-view (list (concat my-test-location "test/AGENDA/PROJECT.org")) 'org-todo-list)
+  (switch-to-buffer (current-buffer))
+  (lain-goto-to-task text)
+  (should (string-equal (lain-extract-periodic-scheduling) result)))
+
+(ert-deftest extrac-periodic-scheduling ()
+  (extrac-periodic-scheduling-test "PROJECTS, 1 weekly" "+1w")
+  (extrac-periodic-scheduling-test "PROJECTS, 1 monthly" "+1m"))
 
 (provide 'lain-tests)
 ;;; lain-tests.el ends here

@@ -18,6 +18,11 @@
 
 (defvar lain-agenda-buffer-name "TASKS.html")
 
+(defun lain-extract-periodic-scheduling ()
+  (let ((scheduled (org-entry-get (point) "SCHEDULED")))
+    (if (string-match "<.*\\(\\+.+\\)>" scheduled 0)
+        (match-string 1 scheduled))))
+
 (defun org-log-note-update (state date hour newstate)
   (re-search-forward (org-item-beginning-re) nil t)
   (let ((regex (concat "\\(.+\\)" state "\\(.+\\)\\[[0-9]+-[0-9]+-[0-9]+ \\(.+\\) [0-9]+:[0-9]+\\]")))
@@ -27,15 +32,15 @@
     (replace-match (concat (match-string 1) state (match-string 2) "[" date " " (match-string 3) " " hour "]"))))
 
 (defun lain-goto-to-task (text)
-  (switch-to-buffer (get-buffer-create "TASKS.html"))
-  (message (buffer-name (current-buffer)))
-  (beginning-of-buffer)
-  (re-search-forward text)
-  (org-agenda-switch-to))
+;; i don't understand why this doesn't work with ert
+;; (switch-to-buffer (get-buffer-create lain-agenda-buffer-name))
+ (beginning-of-buffer)
+ (re-search-forward text)
+ (org-agenda-switch-to)
+ (org-narrow-to-subtree))
 
 (defun lain-create-agenda-view (text)
   (lain-goto-to-task text)
-  (org-narrow-to-subtree)
   (switch-to-buffer (current-buffer))
   (org-html-export-as-html)
   (switch-to-buffer (get-buffer-create "*Org HTML Export*"))
@@ -50,21 +55,12 @@
   (widen)
   (delete-file "/tmp/org/ORG-TASK.html"))
 
-
 (defun lain-reschedule-task (text date)
-  (switch-to-buffer (get-buffer-create "TASKS.html"))
-  (message (buffer-name (current-buffer)))
-  (beginning-of-buffer)
-  (re-search-forward text)
-  (org-agenda-switch-to)
+  (switch-to-buffer (get-buffer-create lain-agenda-buffer-name))
+  (lain-goto-to-task text)
   (org-schedule '(4))
   (org-schedule '() date)
-  (org-narrow-to-subtree)
-  (switch-to-buffer (current-buffer))
-  (message (buffer-name (current-buffer)))
-  (save-buffer)
-  (org-agenda-write-tmp "/tmp/org/ORG-TASK.html"))
-
+  (lain-create-agenda-view text))
 
 (defun lain-update-task(text date time link state)
   (switch-to-buffer (get-buffer-create "TASKS.html"))
