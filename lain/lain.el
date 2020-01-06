@@ -10,6 +10,7 @@
 ;;; Code:
 
 (require 'elnode)
+(require 'subr-x)
 
 
 ;;; This functions should be defined on the emacs file, i didn't added to lain because they have a more general use
@@ -113,14 +114,14 @@
   (org-todo 'right)
   ;; this is suppsed to be executed as a hook but it is not running when the command is invoked non interactively.
 ;  (set-marker org-log-note-marker (point))   
-;;  (org-add-log-note)
+  (org-add-log-note)
   (org-narrow-to-subtree)
   (switch-to-buffer (current-buffer))
   (org-log-note-update "DONE" date time
                        ;; the if evaluates true executed either the field is empty or not
                        (if link
-                           (if (not (string-empty-p link))
-                               (concat "[[" link "]" "[" state "]]"))))
+                           (if (not (string-empty-p  (or link "")))
+                               (concat "[[" link "]" "[" state "]]"))))  
   (save-buffer)
   (lain-create-agenda-view text))
 
