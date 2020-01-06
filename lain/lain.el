@@ -61,8 +61,12 @@
 
 (defun lain-reschedule-task (text date)
   (lain-goto-to-task text)
-  (org-schedule '(4))
-  (org-schedule '() date)
+  (let ((repeat (lain-extract-periodic-scheduling)))
+        (org-schedule '(4))
+        (if repeat 
+            (org-schedule '() (concat date "" repeat))
+          (org-schedule '() date)))
+  (save-buffer)
   (lain-create-agenda-view text))
 
 (defun org-add-log-note-tmp (&optional _purpose)
@@ -109,7 +113,7 @@
   (org-todo 'right)
   ;; this is suppsed to be executed as a hook but it is not running when the command is invoked non interactively.
 ;  (set-marker org-log-note-marker (point))   
-  (org-add-log-note)
+;;  (org-add-log-note)
   (org-narrow-to-subtree)
   (switch-to-buffer (current-buffer))
   (org-log-note-update "DONE" date time
@@ -117,9 +121,8 @@
                        (if link
                            (if (not (string-empty-p link))
                                (concat "[[" link "]" "[" state "]]"))))
-  (message (buffer-name (current-buffer)))
   (save-buffer)
-  (org-agenda-write-tmp "/tmp/org/ORG-TASK.html"))
+  (lain-create-agenda-view text))
 
 (defun lain-done-task (text date time link)
   (lain-update-task text date time link "DONE"))

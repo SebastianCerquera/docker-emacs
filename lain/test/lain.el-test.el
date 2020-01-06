@@ -45,9 +45,13 @@
 	(should (string-equal date result))))
 
 (ert-deftest rescheduling-task ()
-  (test-rescheduling-task "PROJECTS, 2" "2020-12-05")
-  (test-rescheduling-task "PROJECTS, 1 monthly" "2020-12-05")
+  (test-rescheduling-task "PROJECTS, 2" "2020-12-05"))
+
+(ert-deftest rescheduling-task-periodic ()
+  (test-rescheduling-task "PROJECTS, 1 monthly" "2020-02-05")
   (extrac-periodic-scheduling-test "PROJECTS, 1 monthly" "+1m"))
+
+
 
 (ert-deftest lain-task-done-periodic ()
   (lain-done-task "PROJECTS, 1 weekly" "2020-12-05" "00:00" nil)
