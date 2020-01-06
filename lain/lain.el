@@ -65,17 +65,58 @@
   (org-schedule '() date)
   (lain-create-agenda-view text))
 
+(defun org-add-log-note-tmp (&optional _purpose)
+  "Pop up a window for taking a note, and add this note later."
+  (remove-hook 'post-command-hook 'org-add-log-note)
+  (setq org-log-note-window-configuration (current-window-configuration))
+  (delete-other-windows)
+  (move-marker org-log-note-return-to (point))
+  (pop-to-buffer-same-window (marker-buffer org-log-note-marker))
+  (goto-char org-log-note-marker)
+  (org-switch-to-buffer-other-window "*Org Note*")
+  (erase-buffer)
+  (if (memq org-log-note-how '(time state))
+      (org-store-log-note)
+    (let ((org-inhibit-startup t)) (org-mode))
+    (insert (format "# Insert note for %s.
+# Finish with C-c C-c, or cancel with C-c C-k.\n\n"
+		    (cond
+		     ((eq org-log-note-purpose 'clock-out) "stopped clock")
+		     ((eq org-log-note-purpose 'done)  "closed todo item")
+		     ((eq org-log-note-purpose 'state)
+		      (format "state change from \"%s\" to \"%s\""
+			      (or org-log-note-previous-state "")
+			      (or org-log-note-state "")))
+		     ((eq org-log-note-purpose 'reschedule)
+		      "rescheduling")
+		     ((eq org-log-note-purpose 'delschedule)
+		      "no longer scheduled")
+		     ((eq org-log-note-purpose 'redeadline)
+		      "changing deadline")
+		     ((eq org-log-note-purpose 'deldeadline)
+		      "removing deadline")
+		     ((eq org-log-note-purpose 'refile)
+		      "refiling")
+		     ((eq org-log-note-purpose 'note)
+		      "this entry")
+		     (t (error "This should not happen")))))
+    (when org-log-note-extra (insert org-log-note-extra))
+    (setq-local org-finish-function 'org-store-log-note)
+    (run-hooks 'org-log-buffer-setup-hook)))
+
 (defun lain-update-task(text date time link state)
   (lain-goto-to-task text)
   (org-todo 'right)
   ;; this is suppsed to be executed as a hook but it is not running when the command is invoked non interactively.
+;  (set-marker org-log-note-marker (point))   
   (org-add-log-note)
   (org-narrow-to-subtree)
   (switch-to-buffer (current-buffer))
   (org-log-note-update "DONE" date time
+                       ;; the if evaluates true executed either the field is empty or not
                        (if link
-                           (if (string-empty-p link)
-                               state (concat "[[" link "]" "[" state "]]"))))
+                           (if (not (string-empty-p link))
+                               (concat "[[" link "]" "[" state "]]"))))
   (message (buffer-name (current-buffer)))
   (save-buffer)
   (org-agenda-write-tmp "/tmp/org/ORG-TASK.html"))
@@ -449,7 +490,7 @@
 (defun root-handler (httpcon)
   (elnode-hostpath-dispatcher httpcon my-app-routes))
  
-(elnode-start 'root-handler :port 8180 :host "0.0.0.0")
+(elnode-start 'root-handler :port 8080 :host "0.0.0.0")
 
 (provide 'lain)
 ;;; lain.el ends here
