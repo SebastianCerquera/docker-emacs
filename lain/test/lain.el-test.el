@@ -58,10 +58,10 @@
 ;; No se el regex para obtener el primer item de la lista de notas de registro
 ;; (ert-deftest lain-task-done-link ())
 
-;;(ert-deftest rescheduling-task-periodic ()
-;;  (test-rescheduling-task "PROJECTS, 1 monthly" "2020-02-05")
-;;  (extrac-periodic-scheduling-test "PROJECTS, 1 monthly" "+1m")
-;;)
+(ert-deftest rescheduling-task-periodic ()
+  (test-rescheduling-task "PROJECTS, 1 monthly" "2020-02-05")
+  (extrac-periodic-scheduling-test "PROJECTS, 1 monthly" "+1m")
+)
 
 (provide 'lain-tests)
 ;;; lain-tests.el ends here
