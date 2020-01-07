@@ -114,7 +114,7 @@
   (org-todo 'right)
   ;; this is suppsed to be executed as a hook but it is not running when the command is invoked non interactively.
 ;  (set-marker org-log-note-marker (point))   
-  (org-add-log-note)
+;  (org-add-log-note)
   (org-narrow-to-subtree)
   (switch-to-buffer (current-buffer))
   (org-log-note-update "DONE" date time

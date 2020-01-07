@@ -45,13 +45,10 @@
 	(should (string-equal date result))))
 
 (ert-deftest rescheduling-task ()
-  (test-rescheduling-task "PROJECTS, 2" "2020-12-05"))
+  (test-rescheduling-task "PROJECTS, 2" "2020-12-20"))
 
-(ert-deftest rescheduling-task-periodic ()
-  (test-rescheduling-task "PROJECTS, 1 monthly" "2020-02-05")
-  (extrac-periodic-scheduling-test "PROJECTS, 1 monthly" "+1m"))
-
-
+(ert-deftest lain-task-done ()
+  (lain-done-task "PROJECTS, TO COMPLETE" "2020-12-05" "00:00" nil))
 
 (ert-deftest lain-task-done-periodic ()
   (lain-done-task "PROJECTS, 1 weekly" "2020-12-05" "00:00" nil)
@@ -61,8 +58,10 @@
 ;; No se el regex para obtener el primer item de la lista de notas de registro
 ;; (ert-deftest lain-task-done-link ())
 
-(ert-deftest lain-task-done ()
-  (lain-done-task "PROJECTS, TO COMPLETE" "2020-12-05" "00:00" nil))
+;;(ert-deftest rescheduling-task-periodic ()
+;;  (test-rescheduling-task "PROJECTS, 1 monthly" "2020-02-05")
+;;  (extrac-periodic-scheduling-test "PROJECTS, 1 monthly" "+1m")
+;;)
 
 (provide 'lain-tests)
 ;;; lain-tests.el ends here
