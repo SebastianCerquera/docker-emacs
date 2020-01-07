@@ -63,10 +63,12 @@
 (defun lain-reschedule-task (text date)
   (lain-goto-to-task text)
   (let ((repeat (lain-extract-periodic-scheduling)))
-        (org-schedule '(4))
-        (if repeat 
-            (org-schedule '() (concat date "" repeat))
-          (org-schedule '() date)))
+    (org-schedule '(4))
+    (org-schedule '() date)
+    (if repeat
+        (save-excursion
+          (mark-whole-buffer)
+          (replace-regexp "SCHEDULED: <\\(.+\\)>" (concat "SCHEDULED: <\\1 " repeat ">")))))
   (save-buffer)
   (lain-create-agenda-view text))
 
