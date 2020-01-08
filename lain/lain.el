@@ -139,6 +139,8 @@
 (defun lain-kill-named-buffers(org-buffer)
     (if (string-match ".*PROJECT.org" org-buffer 0)
         (kill-buffer x))
+    (if (string-match ".*notes.org" org-buffer 0)
+        (kill-buffer x))
     (if (string-match ".*PERIODIC.org" org-buffer 0)
         (kill-buffer x)))
 
