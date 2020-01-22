@@ -31,3 +31,14 @@ sudo docker run -d --name lain \
  -e DISPLAY=:14 -p 8000:8080 -v $DATA_VOLUME:$DATA_VOLUME \
 $EMACS_IMAGE emacs
 ```
+
+#### Test:
+
+This assumes that cask is alarady installed:
+
+cd lain
+git checkout -- test/AGENDA/PROJECT.org
+
+export PATH="~/.cask/bin:$PATH"
+cask
+./run-tests.sh
