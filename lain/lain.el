@@ -430,8 +430,21 @@
   (elnode-http-start httpcon 200 '("Content-type" . "text/html"))
   (elnode-http-return httpcon (concat "<html><a href=" "/VIEW.html" ">Agenda View</a></html>")))
 
+(defun lain-todo-render-page (i)
+  (widen)
+  (setq header 3)
+  (setq size 200)
+  (setq lstart (save-excursion
+		 (goto-line (+ header (* size i)))
+		 (point)))
+  (setq lend (save-excursion
+	       (goto-line (+ header (* size (+ i 1))))
+	       (point)))
+  (narrow-to-region lstart lend))
+
 (defun todo-view (httpcon)
   (org-base-view '("/small/SMALL/WORK/PROJECT.org" "/small/SMALL/THINGS/PROJECT.org" "/small/SMALL/SKILLS/PROJECT.org" "/small/SMALL/WORK/notes.org") 'org-todo-list)
+  (lain-narrow-to-page (elnode-http-param httpcon "page"))
   (save-excursion
     (set-buffer (get-buffer-create "TASKS.html" ))
     (org-agenda-write "/tmp/org/TODO.html" nil nil"TASKS.html"))

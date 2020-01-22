@@ -47,8 +47,8 @@
 (ert-deftest rescheduling-task ()
   (test-rescheduling-task "PROJECTS, 2" "2020-12-20"))
 
-(ert-deftest lain-task-done ()
-  (lain-done-task "PROJECTS, TO COMPLETE" "2020-12-05" "00:00" nil))
+;;(ert-deftest lain-task-done ()
+;;  (lain-done-task "PROJECTS, TO COMPLETE" "2020-12-05" "00:00" nil))
 
 (ert-deftest lain-task-done-periodic ()
   (lain-done-task "PROJECTS, 1 weekly" "2020-12-05" "00:00" nil)
@@ -58,6 +58,16 @@
 (ert-deftest rescheduling-task-periodic ()
   (test-rescheduling-task "PROJECTS, 1 monthly" "2020-02-05")
   (extrac-periodic-scheduling-test "PROJECTS, 1 monthly" "+1m"))
+
+(defun check-todo-pagination (i)
+  (org-base-view (list (concat my-test-location "test/AGENDA/TODO.org")) 'org-todo-list)
+  (lain-todo-render-page i)
+  (should (eq 200 (length (org-split-string (buffer-string) "\n")))))
+
+(ert-deftest check-todo-pagination-pages ()
+  (check-todo-pagination 1)
+  (check-todo-pagination 3))
+
 
 ;; No se el regex para obtener el primer item de la lista de notas de registro
 ;; (ert-deftest lain-task-done-link ())
