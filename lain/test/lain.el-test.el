@@ -52,9 +52,9 @@
 ;;  (lain-done-task "PROJECTS, TO COMPLETE" "2020-12-05" "00:00" nil))
 
 (ert-deftest lain-task-done-periodic ()
-  (lain-done-task "PROJECTS, 1 weekly" "2020-12-05" "00:00" nil)
+  (lain-done-task "PROJECTS, 1 weekly" "2020-12-12" "00:00" nil)
   (let ((result (lain-extract-date-scheduling)))
-    (should (string-equal "2020-01-12" result))))
+    (should (string-equal "2020-01-19" result))))
 
 (ert-deftest rescheduling-task-periodic ()
   (test-rescheduling-task "PROJECTS, 1 monthly" "2020-02-05")
