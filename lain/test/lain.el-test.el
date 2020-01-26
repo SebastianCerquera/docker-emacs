@@ -7,6 +7,8 @@
 
 ;;; Code:
 
+(defvar lain-agenda-web-path "")
+
 (require 'ert)
 (require 'lain)
 
