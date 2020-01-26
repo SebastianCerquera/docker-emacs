@@ -19,7 +19,9 @@
 
 (defvar lain-agenda-web-path "~/.emacs.d/lain/")
 
-(defvar lain-agenda-buffer-name "TASKS.html")
+;; i tried using a different name without success, altought i think i am setting the right var name it is still creating the bufferwith the default name.
+;; (defvar lain-agenda-buffer-name "TASKS.html")
+(defvar lain-agenda-buffer-name "*Org Agenda*")
 
 (defun lain-extract-periodic-scheduling ()
   (let ((scheduled (org-entry-get (point) "SCHEDULED")))
@@ -271,8 +273,8 @@
   (org-base-view '("/small/SMALL/WORK/PROJECT.org" "/small/SMALL/THINGS/PROJECT.org" "/small/SMALL/SKILLS/PROJECT.org" "/small/SMALL/WORK/notes.org") 'org-todo-list)
   (lain-todo-render-page (lain-get-page-from-pathinfo (elnode-http-pathinfo httpcon)))
   (save-excursion
-    (set-buffer (get-buffer-create "TASKS.html" ))
-    (org-agenda-write "/tmp/org/TODO.html" nil nil"TASKS.html"))
+    (set-buffer (get-buffer-create lain-agenda-buffer-name))
+    (org-agenda-write "/tmp/org/TODO.html" nil nil lain-agenda-buffer-name))
   (elnode-http-start httpcon 200 '("Content-type" . "text/html"))
   (elnode-http-return httpcon (concat "<html><a href=" "/TODO.html" ">Todo View</a></html>")))
 

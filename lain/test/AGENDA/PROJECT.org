@@ -11,12 +11,17 @@
    - <2019-09-21> 1
    - <2019-08-20> 2
 ** TODO PROJECTS, 2
-   SCHEDULED: <2020-01-05 dom>
+   SCHEDULED: <2020-12-20 dom>
+
 ** TODO PROJECTS, 1 weekly
-   SCHEDULED: <2020-01-05 dom +1w>
+   SCHEDULED: <2020-01-12 dom +1w>
+   :PROPERTIES:
+   :LAST_REPEAT: [2020-01-25 sáb 23:49]
+   :END:
+   - State "DONE"       from "TODO"       [2020-12-05 sáb 00:00]
    - <2019-09-21> ahskjhasdjnland
 ** TODO PROJECTS, 1 monthly
-   SCHEDULED: <2020-01-05 dom +1m>
+   SCHEDULED: <2020-02-05 mié +1m>
    - <2019-09-21> ahskjhasdjnland
 ** TODO PROJECTS, TO COMPLETE
    SCHEDULED: <2020-01-05 dom>
