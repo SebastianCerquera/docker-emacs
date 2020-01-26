@@ -69,7 +69,8 @@
 ;;  (check-todo-pagination nil)
   (check-todo-pagination 0)
   (check-todo-pagination 2)
-  (check-todo-pagination 4))
+  (check-todo-pagination 4)
+  (check-todo-pagination 10))
 
 (ert-deftest check-default-pagination-pages ()
   (should (eq 1 (lain-get-page-from-pathinfo "/todo/1")))

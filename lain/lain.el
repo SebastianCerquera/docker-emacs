@@ -255,6 +255,10 @@
   (widen)
   (setq header 3)
   (setq size 200)
+
+  (if (> (* size i) (count-lines (point-min) (point-max)))
+      nil)
+  
   (setq lstart (save-excursion
 		 (goto-line (+ header (* size i)))
 		 (point)))

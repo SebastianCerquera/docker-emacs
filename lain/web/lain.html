@@ -162,7 +162,9 @@
         replaceLinks();
 
         var nextPageHandler = function(){
-
+            var page = getCurrentPage()
+            page = page + 1
+            window.location = "/todo/" + page
         }
         
         var prevPageHandler = function(){
@@ -182,8 +184,8 @@
         var addPaginationButtons = function(){
             if(window.location.pathname == "/TODO.html"){
                 var page = $('body').html()
-                page = page + '<button class="button.back" style="position: relative; left: 0%; right: 0%; bottom: 0%;"> Prev page </button>'
-                page = page + '<button class="button.next" style="position: relative; left: 0%; right: 0%; bottom: 0%;"> Next page </button>'
+                page = page + '<button class="back" style="position: relative; left: 0%; right: 0%; bottom: 0%;"> Prev page </button>'
+                page = page + '<button class="next" style="position: relative; left: 0%; right: 0%; bottom: 0%;"> Next page </button>'
                 $('body').html(page)
 
                 $("button.back").click(prevPageHandler)
