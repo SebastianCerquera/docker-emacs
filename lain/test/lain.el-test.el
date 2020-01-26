@@ -8,6 +8,7 @@
 ;;; Code:
 
 (defvar lain-agenda-web-path "")
+(defvar lain-agenda-buffer-name "*Org Agenda*")
 
 (require 'ert)
 (require 'lain)

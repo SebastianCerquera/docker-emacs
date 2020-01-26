@@ -20,7 +20,6 @@
 (defvar lain-agenda-web-path "~/.emacs.d/lain/")
 
 (defvar lain-agenda-buffer-name "TASKS.html")
-(defvar lain-agenda-buffer-name "*Org Agenda*")
 
 (defun lain-extract-periodic-scheduling ()
   (let ((scheduled (org-entry-get (point) "SCHEDULED")))
