@@ -17,8 +17,6 @@
 
 (defalias 'lain-look-and-feel 'test-look-and-feel)
 
-;; Enviromental variables
-(setq lain-agenda-buffer-name "*Org Agenda*")
 
 (defvar my-test-location (file-name-directory (or default-directory buffer-file-name)))
 
@@ -69,7 +67,8 @@
 
 (ert-deftest check-todo-pagination-pages ()
   (check-todo-pagination 1)
-  (check-todo-pagination 3))
+  (check-todo-pagination 3)
+  (check-todo-pagination 4))
 
 
 ;; No se el regex para obtener el primer item de la lista de notas de registro

@@ -261,9 +261,14 @@
 	       (point)))
   (narrow-to-region lstart lend))
 
+
+(defun lain-get-page-from-pathinfo (pathinfo)
+  (if (string-match "/todo/\\([a-z]+\\)" pathinfo 0)
+      (match-string 1 pathinfo)))
+
 (defun todo-view (httpcon)
   (org-base-view '("/small/SMALL/WORK/PROJECT.org" "/small/SMALL/THINGS/PROJECT.org" "/small/SMALL/SKILLS/PROJECT.org" "/small/SMALL/WORK/notes.org") 'org-todo-list)
-  (lain-narrow-to-page (elnode-http-param httpcon "page"))
+  (lain-todo-render-page (lain-get-page-from-pathinfo (elnode-http-pathinfo httpcon)))
   (save-excursion
     (set-buffer (get-buffer-create "TASKS.html" ))
     (org-agenda-write "/tmp/org/TODO.html" nil nil"TASKS.html"))
