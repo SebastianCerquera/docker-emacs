@@ -264,7 +264,8 @@
 
 (defun lain-get-page-from-pathinfo (pathinfo)
   (if (string-match "/todo/\\([a-z]+\\)" pathinfo 0)
-      (match-string 1 pathinfo)))
+      (string-to-number (match-string 1 pathinfo))
+    0))
 
 (defun todo-view (httpcon)
   (org-base-view '("/small/SMALL/WORK/PROJECT.org" "/small/SMALL/THINGS/PROJECT.org" "/small/SMALL/SKILLS/PROJECT.org" "/small/SMALL/WORK/notes.org") 'org-todo-list)
