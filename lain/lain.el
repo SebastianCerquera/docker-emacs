@@ -122,11 +122,13 @@
   (org-add-log-note)
   (org-narrow-to-subtree)
   (switch-to-buffer (current-buffer))
-  (org-log-note-update state date time
+  (org-log-note-update "DONE" date time
                        ;; the if evaluates true executed either the field is empty or not
                        (if link
                            (if (not (string-empty-p  (or link "")))
-                               (concat "[[" link "]" "[" state "]]"))))  
+                               (concat "[[" link "]" "[" state "]]")
+                             state)
+                         state))
   (save-buffer)
   (lain-create-agenda-view text))
 
