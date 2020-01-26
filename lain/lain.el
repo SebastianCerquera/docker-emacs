@@ -263,7 +263,7 @@
 
 
 (defun lain-get-page-from-pathinfo (pathinfo)
-  (if (string-match "/todo/\\([a-z]+\\)" pathinfo 0)
+  (if (string-match "/todo/\\([0-9]+\\)" pathinfo 0)
       (string-to-number (match-string 1 pathinfo))
     0))
 

@@ -66,10 +66,14 @@
   (should (eq 200 (length (org-split-string (buffer-string) "\n")))))
 
 (ert-deftest check-todo-pagination-pages ()
-  (check-todo-pagination 1)
-  (check-todo-pagination 3)
+;;  (check-todo-pagination nil)
+  (check-todo-pagination 0)
+  (check-todo-pagination 2)
   (check-todo-pagination 4))
 
+(ert-deftest check-default-pagination-pages ()
+  (should (eq 1 (lain-get-page-from-pathinfo "/todo/1")))
+  (should (eq 0 (lain-get-page-from-pathinfo "/todo/"))))
 
 ;; No se el regex para obtener el primer item de la lista de notas de registro
 ;; (ert-deftest lain-task-done-link ())
