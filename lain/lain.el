@@ -331,15 +331,13 @@
 
 (defun periodic-agenda ()
   (interactive)
-  (org-periodic-view))
+  (base-view "PERIODIC" '("/small/SMALL/PERIODIC.org") 'org-agenda-list))
 
 (defun calendar-agenda ()
   (interactive)
-  (org-calendar-view))
-
-(defun todo-agenda ()
-  (interactive)
-  (org-todo-view))
+  (org-base-view '("/small/SMALL/WORK/PROJECT.org" "/small/SMALL/THINGS/PROJECT.org" "/small/SMALL/SKILLS/PROJECT.org"
+		   "/small/SMALL/WORK/notes.org" "/small/SMALL/THINGS/MAINTAINANCE/chores/PROJECT.org")
+		 'org-agenda-list))
  
 (defun root-handler (httpcon)
   (elnode-hostpath-dispatcher httpcon my-app-routes))
