@@ -1,4 +1,4 @@
-ARG VERSION=19.10
+ARG VERSION=20.04
 FROM ubuntu:$VERSION
 
 MAINTAINER JAremko <w3techplaygound@gmail.com>
@@ -37,9 +37,6 @@ RUN echo 'APT::Get::Assume-Yes "true";' >> /etc/apt/apt.conf \
     unzip \
     python3 \
     python3-pip \
-# data utils
-    && pip3 install nltk catboost lightgbm xgboost imblearn graphviz \
-    && python3 -m nltk.downloader all \
 # su-exec
     && git clone https://github.com/ncopa/su-exec.git /tmp/su-exec \
     && cd /tmp/su-exec \
